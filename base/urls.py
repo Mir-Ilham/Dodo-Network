@@ -19,8 +19,8 @@ urlpatterns = [
     path("delete-message/<str:pk>/", views.deleteMessage, name="delete-message"),
 
     path("create-post/", views.createPost, name="create-post"),
-    path("update-post/", views.updatePost, name="update-post"),
-    path("delete-post/", views.deletePost, name="delete-post"),
+    path("update-post/<str:pk>/", views.updatePost, name="update-post"),
+    path("delete-post/<str:pk>/", views.deletePost, name="delete-post"),
 
     path("topics/", views.listTopics, name="topics"),
     path("activity/", views.showActivity, name="activity"),

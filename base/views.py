@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from .models import Room, Topic, Message, User, BlogPost
-from .forms import RoomForm
+from .forms import RoomForm, PostForm
 
 def login(request):
     pass
@@ -41,7 +41,6 @@ def createRoom(request):
     context = {'form': form}
     return render(request, "base/room_form.html", context)
 
-
 def updateRoom(request, pk):
     room = Room.objects.get(id=pk)
     form = RoomForm(instance=room)
@@ -64,13 +63,33 @@ def deleteMessage(request, pk):
     pass
 
 def createPost(request):
-    pass
+    form = PostForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    
+    context = {'form': form}
+    return render(request, "base/post_form.html", context)
 
-def updatePost(request):
-    pass
+def updatePost(request, pk):
+    post = BlogPost.objects.get(id=pk)
+    form = PostForm(instance=post)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    context = {'form': form}
+    return render(request, 'base/post_form.html', context)
 
-def deletePost(request):
-    pass
+def deletePost(request, pk):
+    post = BlogPost.objects.get(id=pk)
+    if request.method == "POST":
+        post.delete()
+        return redirect('home')
+    return render(request, 'base/delete.html', {'obj': post})
 
 def listTopics(request):
     pass
