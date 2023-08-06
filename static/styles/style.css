@@ -104,7 +104,7 @@ a {
 }
 
 .btn--dark {
-  background-color: var(--color-dark-light);
+  background-color: var(--color-dark-medium);
   color: var(--color-light);
 }
 
@@ -421,7 +421,7 @@ a {
 .layout__boxHeader {
   display: flex;
   padding: 1.5rem;
-  background-color: var(--color-dark-light);
+  background-color: var(--color-dark-medium);
 }
 
 .layout__boxTitle {
@@ -802,7 +802,7 @@ a {
 .auth__tagline {
   text-align: center;
   margin-bottom: 3rem;
-  color: var(--color-main);
+  color: var(--color-dark-light);
   font-weight: 500;
   font-size: 1.8rem;
 }
