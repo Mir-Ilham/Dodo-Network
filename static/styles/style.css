@@ -902,7 +902,7 @@ a {
 
 .room__top,
 .participants__top {
-  background: var(--color-dark-light);
+  background: var(--color-dark-medium);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -943,7 +943,7 @@ a {
 }
 
 .room__topRight svg {
-  fill: var(--color-main-light);
+  fill: var(--color-light);
 }
 
 .room__header {
@@ -991,7 +991,7 @@ a {
 .room__info h3 {
   font-size: 2.4rem;
   font-weight: 500;
-  color: var(--color-main);
+  color: var(--color-light);
 }
 
 .room__hosted p {
@@ -1016,7 +1016,7 @@ a {
 
 .room__topics {
   padding: 0.5rem 1.5rem;
-  background: var(--color-dark-light);
+  background: var(--color-main);
   color: var(--color-light);
   display: inline-block;
   font-size: 1.4rem;
@@ -1092,7 +1092,7 @@ a {
 
 .room__message > form > input {
   resize: none;
-  background-color: var(--color-dark-light);
+  background-color: var(--color-dark-medium);
   color: var(--color-light);
   border: none;
   outline: none;
