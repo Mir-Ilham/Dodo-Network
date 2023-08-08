@@ -7,24 +7,32 @@ class User(AbstractUser):
     bio = models.TextField(null=True)
     company_name = models.CharField(max_length=200, null=True)
     profile_picture = models.ImageField(null=True, default="avatar.svg")
+    connections = models.ManyToManyField('self', related_name='connections', blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]
 
-class BlogPost(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    cover = models.ImageField(null=True, default='cover.svg')
-    title = models.CharField(max_length=500, null=True)
-    content = models.TextField(null=True)
-
-    def __str__(self):
-        return self.title[0:50]
-
 class Topic(models.Model):
     name = models.CharField(max_length=200)
+    experts = models.ManyToManyField(User, related_name='experts', blank=True)
 
     def __str__(self):
         return self.name
+
+class BlogPost(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
+    cover = models.ImageField(null=True, default='cover.svg')
+    title = models.CharField(max_length=500, null=True)
+    content = models.TextField(null=True)
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-updated', '-created']
+        
+    def __str__(self):
+        return self.title[0:50]
 
 class Room(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)

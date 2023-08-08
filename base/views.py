@@ -56,8 +56,9 @@ def userProfile(request, pk):
     user = User.objects.get(id=pk)
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
+    posts = user.blogpost_set.all()
     topics = Topic.objects.all()
-    context = {"user": user, "rooms": rooms, "room_messages": room_messages, "topics": topics}
+    context = {"user": user, "rooms": rooms, "room_messages": room_messages, "topics": topics, "posts": posts}
     return render(request, "base/profile.html", context)
 
 @login_required(login_url='login')
@@ -168,30 +169,44 @@ def deleteMessage(request, pk):
         return redirect('home')
     return render(request, 'base/delete.html', {'obj': message})
 
+@login_required(login_url="login")
 def createPost(request):
     form = PostForm()
     if request.method == 'POST':
         form = PostForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
+        BlogPost.objects.create(
+            author = request.user,
+            title = request.POST.get('title'),
+            content = request.POST.get('content')
+        )
+        return redirect('home')
     
     context = {'form': form}
     return render(request, "base/post_form.html", context)
 
+@login_required(login_url="login")
 def updatePost(request, pk):
     post = BlogPost.objects.get(id=pk)
     form = PostForm(instance=post)
+
+    if request.user != post.author:
+        return redirect('home')
+
     if request.method == 'POST':
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
+        post.title = request.POST.get('title')
+        post.content = request.POST.get('content')
+        post.save()
+        return redirect('home')
     context = {'form': form}
     return render(request, 'base/post_form.html', context)
 
+@login_required(login_url="login")
 def deletePost(request, pk):
     post = BlogPost.objects.get(id=pk)
+
+    if request.user != post.author:
+        return redirect('home')
+
     if request.method == "POST":
         post.delete()
         return redirect('home')

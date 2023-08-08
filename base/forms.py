@@ -21,4 +21,4 @@ class UserForm(ModelForm):
 class PostForm(ModelForm):
     class Meta:
         model = BlogPost
-        fields = '__all__'
+        fields = ['title', 'content']
