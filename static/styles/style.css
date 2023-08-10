@@ -255,6 +255,13 @@ a {
   gap: 1rem;
 }
 
+.error--messages {
+  color: var(--color-error);
+  list-style-type: none;
+  padding: 0 0 8px 0;
+  font-size: 1.6rem;
+}
+
 @media screen and (min-width: 500px) {
   .mobile-menu {
     display: none;
@@ -616,9 +623,29 @@ a {
   letter-spacing: 1px;
 }
 
-.roomList__header p {
-  font-weight: 500;
-  color: var(--color-dark-light);
+/*==============================
+=>  Profile List
+================================*/
+
+.profileList_btn_container {
+  margin: 0 0 20px 0;
+}
+
+.profileList_btn_container a {
+  margin-right: 10px;
+}
+
+/*========== Post List Post ==========*/
+
+.post__actions {
+  display: flex;
+  column-gap: 1em;
+}
+
+.post__actions svg {
+  fill: var(--color-light);
+  height: 16px;
+  width: 16px;
 }
 
 /*========== Room List Room ==========*/

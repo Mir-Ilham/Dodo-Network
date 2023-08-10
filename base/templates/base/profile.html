@@ -31,13 +31,27 @@
           </div>
         </div>
 
+        <div class="profileList_btn_container">
+          <a href="{% url 'user-profile' pk %}?q=rooms" class="btn btn--pill">Discussion Rooms</a>
+          <a href="{% url 'user-profile' pk %}" class="btn btn--pill">Blog Posts</a>          
+        </div>
+
+        {% if viewRooms %}
         <div class="roomList__header">
           <div>
             <h2>Discussion Rooms Hosted by {{user.username}}</h2>
           </div>
         </div>
         {% include 'base/feed_component.html' %}
+        {% else %}
+        <div class="roomList__header">
+          <div>
+            <h2>Blog Posts by {{user.username}}</h2>
+          </div>
+        </div>
         {% include 'base/post_component.html' %}
+        {% endif %}
+
       </div>
       <!-- Room List End -->
 

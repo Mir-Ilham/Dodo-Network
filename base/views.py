@@ -53,12 +53,16 @@ def registerUser(request):
     return render(request, "base/login_register.html", context)
 
 def userProfile(request, pk):
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    viewRooms = False
+    if q == 'rooms':
+        viewRooms = True
     user = User.objects.get(id=pk)
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
     posts = user.blogpost_set.all()
     topics = Topic.objects.all()
-    context = {"user": user, "rooms": rooms, "room_messages": room_messages, "topics": topics, "posts": posts}
+    context = {"user": user, "rooms": rooms, "room_messages": room_messages, "topics": topics, "posts": posts, "viewRooms": viewRooms, 'pk': pk}
     return render(request, "base/profile.html", context)
 
 @login_required(login_url='login')
@@ -76,6 +80,9 @@ def updateUser(request):
     return render(request, 'base/update-user.html', context)
 
 def home(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     rooms = Room.objects.filter(
         Q(topic__name__icontains=q) |
@@ -172,32 +179,40 @@ def deleteMessage(request, pk):
 @login_required(login_url="login")
 def createPost(request):
     form = PostForm()
+    topics = Topic.objects.all()
     if request.method == 'POST':
         form = PostForm(request.POST)
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name=topic_name)
         BlogPost.objects.create(
             author = request.user,
             title = request.POST.get('title'),
-            content = request.POST.get('content')
+            content = request.POST.get('content'),
+            topic = topic
         )
         return redirect('home')
     
-    context = {'form': form}
+    context = {'form': form, 'topics': topics}
     return render(request, "base/post_form.html", context)
 
 @login_required(login_url="login")
 def updatePost(request, pk):
     post = BlogPost.objects.get(id=pk)
     form = PostForm(instance=post)
+    topics = Topic.objects.all()
 
     if request.user != post.author:
         return redirect('home')
 
     if request.method == 'POST':
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name=topic_name)
         post.title = request.POST.get('title')
         post.content = request.POST.get('content')
+        post.topic = topic
         post.save()
         return redirect('home')
-    context = {'form': form}
+    context = {'form': form, 'topics': topics, 'post': post}
     return render(request, 'base/post_form.html', context)
 
 @login_required(login_url="login")

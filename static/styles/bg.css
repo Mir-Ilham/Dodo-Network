@@ -1,0 +1,11 @@
+/* Header */
+.large-header {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: rgb(37,37,38);
+  background: linear-gradient(90deg, rgba(37,37,38,1) 0%, rgba(124,28,29,1) 90%, rgba(157,35,37,1) 100%);
+  background-size: cover;
+  background-position: center center;
+  z-index: 1;
+}

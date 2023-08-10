@@ -1,8 +1,7 @@
-{% extends 'main.html' %}
+{% extends 'main_entry.html' %}
 
 {% block content %}
 <main class="auth layout">
-
   {% if page == 'login' %}
   <div class="container">
     <div class="layout__box">
@@ -12,7 +11,15 @@
         </div>
       </div>
       <div class="layout__body">
+        {% if messages %}
+        <ul class="error--messages">
+            {%  for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %} 
+        </ul>
+        {% else %}
         <h2 class="auth__tagline">Connect with professionals</h2>
+        {% endif %}
 
         <form class="form" action="" method="POST">
           {% csrf_token %}
@@ -57,7 +64,15 @@
         </div>
       </div>
       <div class="layout__body">
+        {% if messages %}
+        <ul class="error--messages">
+            {%  for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %} 
+        </ul>
+        {% else %}
         <h2 class="auth__tagline">Connect with professionals</h2>
+        {% endif %}
 
         <form class="form" action="" method="POST">
           {% csrf_token %}
