@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 from .models import Room, Topic, Message, User, BlogPost
-from .forms import RoomForm, PostForm, MyUserCreationForm, UserForm
+from .forms import RoomForm, PostForm, MyUserCreationForm, UserForm, UpdateUserForm
 
 def loginUser(request):
     page = "login"
@@ -59,19 +59,21 @@ def userProfile(request, pk):
         viewRooms = True
     user = User.objects.get(id=pk)
     rooms = user.room_set.all()
+    skills = user.experts.all()
+    # skills = None
     room_messages = user.message_set.all()
     posts = user.blogpost_set.all()
     topics = Topic.objects.all()
-    context = {"user": user, "rooms": rooms, "room_messages": room_messages, "topics": topics, "posts": posts, "viewRooms": viewRooms, 'pk': pk}
+    context = {"user": user, "rooms": rooms, "room_messages": room_messages, "topics": topics, "posts": posts, "viewRooms": viewRooms, 'skills': skills, 'pk': pk}
     return render(request, "base/profile.html", context)
 
 @login_required(login_url='login')
 def updateUser(request):
     user = request.user
-    form = UserForm(instance=user)
+    form = UpdateUserForm(instance=user)
 
     if request.method == 'POST':
-        form = UserForm(request.POST, instance=user)
+        form = UpdateUserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             return redirect('user-profile', pk=user.id)
@@ -226,6 +228,23 @@ def deletePost(request, pk):
         post.delete()
         return redirect('home')
     return render(request, 'base/delete.html', {'obj': post})
+
+@login_required(login_url='login')
+def addSkill(request, pk):
+    user= User.objects.get(id=pk)
+    topics = Topic.objects.all()
+
+    if request.user != user:
+        return redirect('home')
+
+    if request.method == 'POST':
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name=topic_name)
+        topic.experts.add(request.user)
+        return redirect('user-profile', pk=pk)
+    
+    context = {'topics': topics}
+    return render(request, "base/add_skill.html", context)
 
 def listTopics(request):
     pass

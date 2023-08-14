@@ -22,6 +22,8 @@ urlpatterns = [
     path("update-post/<str:pk>/", views.updatePost, name="update-post"),
     path("delete-post/<str:pk>/", views.deletePost, name="delete-post"),
 
+    path("add-skill/<str:pk>/", views.addSkill, name="add-skill"),
+
     path("topics/", views.listTopics, name="topics"),
     path("activity/", views.showActivity, name="activity"),
 ]

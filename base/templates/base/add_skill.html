@@ -1,4 +1,4 @@
-{% extends 'main_entry.html' %}
+{% extends 'main_entry.html' %} 
 
 {% block content %}
 <main class="create-room layout">
@@ -20,30 +20,25 @@
               ></path>
             </svg>
           </a>
-          <h3>Create / Update Room</h3>
+          <h3>Add Skill</h3>
         </div>
       </div>
       <div class="layout__body">
         <form class="form" action="" method="POST">
-            {% csrf_token %}
+          {% csrf_token %}
 
           <div class="form__group">
-            <label for="room_name">Room Name</label>
-            {{form.name}}
-          </div>
-
-          <div class="form__group">
-            <label for="room_topic">Enter a Topic</label>
+            <label for="post_topic">Enter a skill</label>
             <input
               required
               type="text"
-              value="{{room.topic.name}}"
+              value="{{post.topic.name}}"
               name="topic"
-              id="room_topic"
+              id="post_topic"
               list="topic-list"
             />
             <datalist id="topic-list">
-              <select id="room_topic">
+              <select id="post_topic">
                 {% for topic in topics %}
                 <option value="{{topic.name}}">{{topic.name}}</option>
                 {% endfor %}  
@@ -51,13 +46,11 @@
             </datalist>
           </div>
 
-          <div class="form__group">
-            <label for="room_description">About</label>
-            {{form.description}}
-          </div>
           <div class="form__action">
-            <a class="btn btn--dark" href="{{request.META.HTTP_REFERER}}">Cancel</a>
-            <button class="btn btn--main" type="submit">Submit</button>
+            <a class="btn btn--dark" href="{{request.META.HTTP_REFERER}}"
+              >Cancel</a
+            >
+            <button class="btn btn--main" type="submit">Add</button>
           </div>
         </form>
       </div>

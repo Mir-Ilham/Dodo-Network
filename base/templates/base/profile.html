@@ -29,8 +29,22 @@
               {{user.bio}}
             </p>
           </div>
+          <div class="profile__about">
+            <h3>Skills</h3>
+            <ul>
+              {% for skill in skills %}
+              <li>{{skill.name}}</li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
 
+        {% if request.user == user %}
+        <div class="profileList_btn_container">
+          <a href="{% url 'add-skill' pk %}" class="btn btn--pill">Add Skill</a>
+        </div>
+        {% endif %}
+        
         <div class="profileList_btn_container">
           <a href="{% url 'user-profile' pk %}?q=rooms" class="btn btn--pill">Discussion Rooms</a>
           <a href="{% url 'user-profile' pk %}" class="btn btn--pill">Blog Posts</a>          

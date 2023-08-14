@@ -18,6 +18,11 @@ class UserForm(ModelForm):
         model = User
         fields = ['name', 'username', 'email', 'bio']
 
+class UpdateUserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['profile_picture', 'name', 'username', 'email', 'company_name', 'bio']
+
 class PostForm(ModelForm):
     class Meta:
         model = BlogPost
