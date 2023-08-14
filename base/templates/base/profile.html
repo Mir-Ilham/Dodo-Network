@@ -37,11 +37,25 @@
               {% endfor %}
             </ul>
           </div>
+          <div class="profile__about">
+            <h3>Connections</h3>
+            <ul>
+              {% for connection in connections %}
+              <li>@{{connection.username}}</li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
 
         {% if request.user == user %}
         <div class="profileList_btn_container">
           <a href="{% url 'add-skill' pk %}" class="btn btn--pill">Add Skill</a>
+        </div>
+        {% endif %}
+
+        {% if request.user != user and request.user.is_authenticated %}
+        <div class="profileList_btn_container">
+          <a href="{% url 'connect' user.id %}" class="btn btn--pill">Connect</a>
         </div>
         {% endif %}
         

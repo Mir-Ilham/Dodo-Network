@@ -58,13 +58,15 @@ def userProfile(request, pk):
     if q == 'rooms':
         viewRooms = True
     user = User.objects.get(id=pk)
+    connections = user.connections.all()
     rooms = user.room_set.all()
     skills = user.experts.all()
-    # skills = None
     room_messages = user.message_set.all()
     posts = user.blogpost_set.all()
     topics = Topic.objects.all()
-    context = {"user": user, "rooms": rooms, "room_messages": room_messages, "topics": topics, "posts": posts, "viewRooms": viewRooms, 'skills': skills, 'pk': pk}
+    context = {"user": user, "rooms": rooms, "room_messages": room_messages, 
+               "topics": topics, "posts": posts, "viewRooms": viewRooms, 
+               'skills': skills, 'pk': pk, 'connections': connections}
     return render(request, "base/profile.html", context)
 
 @login_required(login_url='login')
@@ -93,7 +95,13 @@ def home(request):
         )
     topics = Topic.objects.all()
     room_count = rooms.count()
-    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
+    room_messages = []
+    connections = request.user.connections.all()
+
+    for connection in connections:
+        for message in connection.message_set.all():
+            room_messages.append(message)
+
     context = {"rooms": rooms, "topics": topics, "room_count": room_count, "room_messages": room_messages}
     return render(request, "base/home.html", context)
 
@@ -245,6 +253,18 @@ def addSkill(request, pk):
     
     context = {'topics': topics}
     return render(request, "base/add_skill.html", context)
+
+@login_required(login_url='login')
+def connect(request, pk):
+    user = User.objects.get(id=pk)
+    topics = Topic.objects.all()
+
+    if request.user == user:
+        return redirect('home')
+    
+    request.user.connections.add(user)
+
+    return redirect('user-profile', pk=user.id)
 
 def listTopics(request):
     pass

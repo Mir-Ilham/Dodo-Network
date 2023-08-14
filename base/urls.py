@@ -24,6 +24,8 @@ urlpatterns = [
 
     path("add-skill/<str:pk>/", views.addSkill, name="add-skill"),
 
+    path("connect/<str:pk>/", views.connect, name="connect"),
+
     path("topics/", views.listTopics, name="topics"),
     path("activity/", views.showActivity, name="activity"),
 ]
