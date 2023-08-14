@@ -200,7 +200,7 @@ def createPost(request):
             content = request.POST.get('content'),
             topic = topic
         )
-        return redirect('home')
+        return redirect('user-profile', pk=request.user.id)
     
     context = {'form': form, 'topics': topics}
     return render(request, "base/post_form.html", context)
@@ -221,7 +221,7 @@ def updatePost(request, pk):
         post.content = request.POST.get('content')
         post.topic = topic
         post.save()
-        return redirect('home')
+        return redirect('user-profile', pk=request.user.id)
     context = {'form': form, 'topics': topics, 'post': post}
     return render(request, 'base/post_form.html', context)
 
@@ -234,7 +234,8 @@ def deletePost(request, pk):
 
     if request.method == "POST":
         post.delete()
-        return redirect('home')
+        return redirect('user-profile', pk=request.user.id)
+    
     return render(request, 'base/delete.html', {'obj': post})
 
 @login_required(login_url='login')
