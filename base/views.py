@@ -52,6 +52,7 @@ def registerUser(request):
     context = {"form": form}
     return render(request, "base/login_register.html", context)
 
+@login_required(login_url="login")
 def userProfile(request, pk):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     viewRooms = False
@@ -93,18 +94,19 @@ def home(request):
         Q(name__icontains=q) |
         Q(description__icontains=q)
         )
-    topics = Topic.objects.all()
+    topics = Topic.objects.all()[0:7]
     room_count = rooms.count()
     room_messages = []
     connections = request.user.connections.all()
 
     for connection in connections:
-        for message in connection.message_set.all():
+        for message in connection.message_set.all()[0:2]:
             room_messages.append(message)
 
     context = {"rooms": rooms, "topics": topics, "room_count": room_count, "room_messages": room_messages}
     return render(request, "base/home.html", context)
 
+@login_required(login_url="login")
 def room(request, pk):
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all()
@@ -267,8 +269,20 @@ def connect(request, pk):
 
     return redirect('user-profile', pk=user.id)
 
+@login_required(login_url='login')
 def listTopics(request):
-    pass
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    topics = Topic.objects.filter(name__icontains=q)
+    return render(request, 'base/topics.html', {'topics': topics})
 
+@login_required(login_url='login')
 def showActivity(request):
-    pass
+    room_messages = []
+    connections = request.user.connections.all()
+
+    for connection in connections:
+        for message in connection.message_set.all():
+            room_messages.append(message)
+
+    context = {"room_messages": room_messages}
+    return render(request, 'base/activity.html', context)

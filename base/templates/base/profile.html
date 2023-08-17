@@ -31,7 +31,7 @@
           </div>
           <div class="profile__about">
             <h3>Skills</h3>
-            <ul>
+            <ul class="profile_extras_list">
               {% for skill in skills %}
               <li>{{skill.name}}</li>
               {% endfor %}
@@ -39,7 +39,7 @@
           </div>
           <div class="profile__about">
             <h3>Connections</h3>
-            <ul>
+            <ul class="profile_extras_list">
               {% for connection in connections %}
               <li>@{{connection.username}}</li>
               {% endfor %}
@@ -49,7 +49,13 @@
 
         {% if request.user == user %}
         <div class="profileList_btn_container">
-          <a href="{% url 'add-skill' pk %}" class="btn btn--pill">Add Skill</a>
+          <a href="{% url 'add-skill' pk %}" class="btn btn--pill">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+              <title>add</title>
+              <path d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z"></path>
+            </svg>
+            Add Skill
+          </a>
         </div>
         {% endif %}
 

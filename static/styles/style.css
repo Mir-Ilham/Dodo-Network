@@ -635,6 +635,10 @@ a {
   margin-right: 10px;
 }
 
+.profile_extras_list {
+  list-style-type: none;
+}
+
 /*========== Post List Post ==========*/
 
 .post__actions {
@@ -754,6 +758,13 @@ a {
   color: var(--color-light);
   letter-spacing: 1px;
   font-size: 1.4rem;
+}
+
+.activities__footer {
+  background-color: var(--color-dark-medium);
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .activities__box {
