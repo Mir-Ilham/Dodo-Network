@@ -30,10 +30,16 @@
             </p>
           </div>
           <div class="profile__about">
+            <h3>Company</h3>
+            <p>
+              {{user.company_name}}
+            </p>
+          </div>
+          <div class="profile__about">
             <h3>Skills</h3>
-            <ul class="profile_extras_list">
+            <ul class="profile__skills profile_extras_list">
               {% for skill in skills %}
-              <li>{{skill.name}}</li>
+              <li class="btn--skill">{{skill.name}}</li>
               {% endfor %}
             </ul>
           </div>
@@ -41,7 +47,7 @@
             <h3>Connections</h3>
             <ul class="profile_extras_list">
               {% for connection in connections %}
-              <li>@{{connection.username}}</li>
+              <li><a href="{% url 'user-profile' connection.id %}">@{{connection.username}}</a></li>
               {% endfor %}
             </ul>
           </div>

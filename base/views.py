@@ -5,9 +5,9 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 from .models import Room, Topic, Message, User, BlogPost
-from .forms import RoomForm, PostForm, MyUserCreationForm, UserForm, UpdateUserForm
+from .forms import RoomForm, PostForm, MyUserCreationForm, UpdateUserForm
 
-def loginUser(request):
+def loginUser(request): 
     page = "login"
     if request.user.is_authenticated:
         return redirect('home')
@@ -76,7 +76,7 @@ def updateUser(request):
     form = UpdateUserForm(instance=user)
 
     if request.method == 'POST':
-        form = UpdateUserForm(request.POST, instance=user)
+        form = UpdateUserForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             return redirect('user-profile', pk=user.id)
@@ -193,15 +193,17 @@ def createPost(request):
     form = PostForm()
     topics = Topic.objects.all()
     if request.method == 'POST':
-        form = PostForm(request.POST)
         topic_name = request.POST.get('topic')
         topic, created = Topic.objects.get_or_create(name=topic_name)
-        BlogPost.objects.create(
+        post = BlogPost.objects.create(
             author = request.user,
             title = request.POST.get('title'),
             content = request.POST.get('content'),
             topic = topic
         )
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
         return redirect('user-profile', pk=request.user.id)
     
     context = {'form': form, 'topics': topics}
@@ -222,7 +224,9 @@ def updatePost(request, pk):
         post.title = request.POST.get('title')
         post.content = request.POST.get('content')
         post.topic = topic
-        post.save()
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
         return redirect('user-profile', pk=request.user.id)
     context = {'form': form, 'topics': topics, 'post': post}
     return render(request, 'base/post_form.html', context)

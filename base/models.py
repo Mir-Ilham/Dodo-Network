@@ -22,7 +22,7 @@ class Topic(models.Model):
 class BlogPost(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
-    cover = models.ImageField(null=True, default='cover.svg')
+    cover = models.ImageField(null=True, default='cover.png')
     title = models.CharField(max_length=500, null=True)
     content = models.TextField(null=True)
     updated = models.DateTimeField(auto_now=True)

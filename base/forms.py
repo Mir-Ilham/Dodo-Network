@@ -26,4 +26,4 @@ class UpdateUserForm(ModelForm):
 class PostForm(ModelForm):
     class Meta:
         model = BlogPost
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'cover']

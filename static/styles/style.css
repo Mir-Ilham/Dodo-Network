@@ -623,22 +623,6 @@ a {
   letter-spacing: 1px;
 }
 
-/*==============================
-=>  Profile List
-================================*/
-
-.profileList_btn_container {
-  margin: 0 0 20px 0;
-}
-
-.profileList_btn_container a {
-  margin-right: 10px;
-}
-
-.profile_extras_list {
-  list-style-type: none;
-}
-
 /*========== Post List Post ==========*/
 
 .post__actions {
@@ -650,6 +634,16 @@ a {
   fill: var(--color-light);
   height: 16px;
   width: 16px;
+}
+
+.blog-post-cover {
+  margin-top: 15px;
+}
+
+.blog-post-cover img {
+  max-width: 940px;
+  max-height: 788px;
+
 }
 
 /*========== Room List Room ==========*/
@@ -913,6 +907,37 @@ a {
 
 .profile-page .roomList__header h2 {
   color: var(--color-dark-light);
+}
+
+/*==============================
+=>  Profile List (ilh)
+================================*/
+
+.profile__skills {
+  display: flex;
+}
+
+.profileList_btn_container {
+  margin: 0 0 20px 0;
+}
+
+.profileList_btn_container a {
+  margin-right: 10px;
+}
+
+.profile_extras_list {
+  list-style-type: none;
+}
+
+.btn--skill {
+  border-radius: 10rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 6px 2.5rem;
+  color: var(--color-light);
+  background: var(--color-main);
+  border: none;
+  margin-right: 8px;
 }
 
 /*==============================
