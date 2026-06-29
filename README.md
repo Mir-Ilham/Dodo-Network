@@ -86,27 +86,31 @@ Inspired by developer community platforms such as the DEV Community, Dodo Networ
 
 ## 📸 Screenshots
 
-> Screenshots of the running application will be embedded below. Until then, a sample placeholder is shown — replace it with real captures of the app.
-
 <table width="100%">
   <tr>
     <td width="50%" align="center">
       <p><b>Feed Home</b></p>
-      <img src="https://via.placeholder.com/600x360.png?text=Dodo+Network+-+Feed+Home" alt="Dodo Network Feed Home" />
+      <img src="./app_ss/home.png" alt="Dodo Network Feed Home" />
     </td>
     <td width="50%" align="center">
       <p><b>Room Conversation</b></p>
-      <img src="https://via.placeholder.com/600x360.png?text=Dodo+Network+-+Room+Conversation" alt="Dodo Network Room Conversation" />
+      <img src="./app_ss/room.png" alt="Dodo Network Room Conversation" />
     </td>
   </tr>
   <tr>
     <td width="50%" align="center">
       <p><b>User Profile</b></p>
-      <img src="https://via.placeholder.com/600x360.png?text=Dodo+Network+-+User+Profile" alt="Dodo Network User Profile" />
+      <img src="./app_ss/profile.png" alt="Dodo Network User Profile" />
     </td>
     <td width="50%" align="center">
       <p><b>Login / Register</b></p>
-      <img src="https://via.placeholder.com/600x360.png?text=Dodo+Network+-+Login+%2F+Register" alt="Dodo Network Login / Register" />
+      <img src="./app_ss/register.png" alt="Dodo Network Login / Register" />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <p><b>Blog post</b></p>
+      <img src="./app_ss/blog.png" alt="Dodo Network User Blog post" />
     </td>
   </tr>
 </table>
